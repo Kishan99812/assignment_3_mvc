@@ -2,7 +2,7 @@ const express = require('express');
 const hbs = require('express-handlebars');
 const app = express();
 const path = require('path');
-const PORT = 2000;
+const PORT = 4000;
 //requiring fs
 const fs = require('fs');
 

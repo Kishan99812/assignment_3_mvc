@@ -10,24 +10,27 @@ const registration = ((req, res) => {
     let { name, email, pass, contact } = req.body;
 
     let data = fs.readFileSync('./users/userdetails.txt').toString().split('\n');
-
+    console.log(regName.test(name))
+    console.log(regMail.test(email))
+    console.log(regPass.test(pass))
+    console.log(regcontact.test(contact))
     if (name === '' || email === '' || pass === '' || contact === '') {
         res.render('register', { errMsg: "Fields are missing!" });
     }
     else {
         if (regName.test(name) && regMail.test(email) && regPass.test(pass) && regcontact.test(contact)) {
-            for (let i = 0; i < data.length - 1; i++) {
+            for (let i = 0; i < data.length - 0; i++) {
                 let info = data[i].split(',');
                 if (email != info[1]) {
                     fs.appendFile('./users/userdetails.txt', `${name},${email},${pass},${contact}\n`, (err) => {
                         if (err) {
                             res.render('register', { errMsg: 'Someting went wrong' });
                         } else {
-                            res.redirect("/users/welcome/" + email);
+                            res.render("welcome");
                         }
                     })
                 }else{
-                    res.send('User Exist');
+                    res.render('register',{errMsg:'user exits'});
                 }
             }
         }
